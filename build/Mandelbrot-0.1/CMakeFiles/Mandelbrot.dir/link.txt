@@ -1,0 +1,1 @@
+/usr/bin/g++   -g -fpic -Wall -fno-common -Wshadow -Wextra -pedantic -std=c++11 -save-temps -Ofast -flto -DNDEBUG    CMakeFiles/Mandelbrot.dir/src/Mandelbrot.cpp.o  -o Mandelbrot -rdynamic ../Vector-1.0/Vector/libVector.a -lsfml-system -lsfml-window -lsfml-graphics -lsfml-network -lsfml-audio 

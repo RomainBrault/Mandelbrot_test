@@ -1,0 +1,2 @@
+/usr/bin/ar cr libVector.a  CMakeFiles/Vector.dir/src/instrset_detect.cpp.o
+/usr/bin/ranlib libVector.a
