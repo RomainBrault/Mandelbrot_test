@@ -1,13 +1,13 @@
-set(CMAKE_CXX_COMPILER "/usr/bin/g++")
+set(CMAKE_CXX_COMPILER "/opt/intel/composer_xe_2013.2.146/bin/intel64/icpc")
 set(CMAKE_CXX_COMPILER_ARG1 "")
-set(CMAKE_CXX_COMPILER_ID "GNU")
-set(CMAKE_CXX_COMPILER_VERSION "4.7.2")
+set(CMAKE_CXX_COMPILER_ID "Intel")
+set(CMAKE_CXX_COMPILER_VERSION "13.1.0.20130121")
 set(CMAKE_CXX_PLATFORM_ID "Linux")
 
 set(CMAKE_AR "/usr/bin/ar")
 set(CMAKE_RANLIB "/usr/bin/ranlib")
 set(CMAKE_LINKER "/usr/bin/ld")
-set(CMAKE_COMPILER_IS_GNUCXX 1)
+set(CMAKE_COMPILER_IS_GNUCXX )
 set(CMAKE_CXX_COMPILER_LOADED 1)
 set(CMAKE_CXX_COMPILER_WORKS TRUE)
 set(CMAKE_CXX_ABI_COMPILED TRUE)
@@ -49,8 +49,8 @@ endif()
 
 
 
-set(CMAKE_CXX_IMPLICIT_LINK_LIBRARIES "stdc++;m;c")
-set(CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES "/usr/lib/gcc/x86_64-redhat-linux/4.7.2;/usr/lib64;/lib64;/opt/intel/composer_xe_2013.2.146/compiler/lib/intel64;/opt/intel/composer_xe_2013.2.146/ipp/lib/intel64;/opt/intel/composer_xe_2013.2.146/mkl/lib/intel64;/opt/intel/composer_xe_2013.2.146/tbb/lib/intel64;/usr/lib")
+set(CMAKE_CXX_IMPLICIT_LINK_LIBRARIES "imf;svml;irng;m;ipgo;decimal;cilkrts;stdc++;irc;svml;c;irc_s;dl;c")
+set(CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES "/opt/intel/composer_xe_2013.2.146/compiler/lib/intel64;/opt/intel/composer_xe_2013.2.146/ipp/lib/intel64;/opt/intel/composer_xe_2013.2.146/mkl/lib/intel64;/opt/intel/composer_xe_2013.2.146/tbb/lib/intel64;/usr/lib/gcc/x86_64-redhat-linux/4.7.2;/usr/lib64;/lib64;/usr/lib;/lib")
 set(CMAKE_CXX_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES "")
 
 

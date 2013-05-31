@@ -6,7 +6,7 @@ SET(CMAKE_DEPENDS_LANGUAGES
 SET(CMAKE_DEPENDS_CHECK_CXX
   "/home/romain/Dropbox/Perso/Mandelbrot_test/Vector-1.0/Vector/src/instrset_detect.cpp" "/home/romain/Dropbox/Perso/Mandelbrot_test/build/Vector-1.0/Vector/CMakeFiles/Vector.dir/src/instrset_detect.cpp.o"
   )
-SET(CMAKE_CXX_COMPILER_ID "GNU")
+SET(CMAKE_CXX_COMPILER_ID "Intel")
 
 # Preprocessor definitions for this target.
 SET(CMAKE_TARGET_DEFINITIONS

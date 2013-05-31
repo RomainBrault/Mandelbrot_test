@@ -45,11 +45,11 @@ CMAKE_CC_FLAGS_RELWITHDEBINFO:STRING=-O2 -g
 CMAKE_COLOR_MAKEFILE:BOOL=ON
 
 //CXX compiler.
-CMAKE_CXX_COMPILER:FILEPATH=/usr/bin/g++
+CMAKE_CXX_COMPILER:FILEPATH=/opt/intel/composer_xe_2013.2.146/bin/intel64/icpc
 
 //Choose the type of build, options are: None Debug Release RelWithDebInfo
 // MinSizeRel.
-CMAKE_CXX_FLAGS:STRING=-g -fpic -Wall -fno-common -Wshadow -Wextra -pedantic -std=c++11 -save-temps
+CMAKE_CXX_FLAGS:STRING=-g -fpic -Wcheck -Werror -openmp -Wall -fno-common -std=c++11 -fno-gnu-keywords
 
 //Choose the type of build, options are: None Debug Release RelWithDebInfo
 // MinSizeRel.
@@ -61,7 +61,7 @@ CMAKE_CXX_FLAGS_MINSIZEREL:STRING=-Os -DNDEBUG
 
 //Choose the type of build, options are: None Debug Release RelWithDebInfo
 // MinSizeRel.
-CMAKE_CXX_FLAGS_RELEASE:STRING=-Ofast -flto -DNDEBUG
+CMAKE_CXX_FLAGS_RELEASE:STRING=-Ofast -DNDEBUG
 
 //Choose the type of build, options are: None Debug Release RelWithDebInfo
 // MinSizeRel.
@@ -280,6 +280,12 @@ Vector_LIB_DEPENDS:STATIC=
 //Value Computed by CMake
 Vector_SOURCE_DIR:STATIC=/home/romain/Dropbox/Perso/Mandelbrot_test/Vector-1.0
 
+//Path to a program.
+XIAR:FILEPATH=/opt/intel/composer_xe_2013.2.146/bin/intel64/xiar
+
+//Path to a program.
+XILD:FILEPATH=/opt/intel/composer_xe_2013.2.146/bin/intel64/xild
+
 
 ########################
 # INTERNAL cache entries
@@ -488,6 +494,10 @@ SFML_SYSTEM_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
 SFML_WINDOW_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: SFML_WINDOW_LIBRARY_RELEASE
 SFML_WINDOW_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: XIAR
+XIAR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: XILD
+XILD-ADVANCED:INTERNAL=1
 //Result of TRY_COMPILE
 _COMPILE_RESULT_VAR:INTERNAL=TRUE
 //Result of TRY_RUN

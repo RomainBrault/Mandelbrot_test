@@ -10,7 +10,7 @@ INCLUDE_DIRECTORIES(
     "${PROJECT_BINARY_DIR}/Vector-1.0/Vector"
 )
 
-find_package(SFML 1.6 REQUIRED system window graphics network audio)
+find_package( SFML 1.6 REQUIRED system window graphics network audio )
 
 # Check for C++11
 INCLUDE("${CMAKE_SOURCE_DIR}/CMake/cpp11/CheckCXX11Features.cmake")

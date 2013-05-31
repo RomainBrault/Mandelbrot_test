@@ -9,6 +9,8 @@
 ../Mandelbrot-0.1/include/Mandelbrot.hpp
 vectorclass.h
 -
+iostream
+-
 
 ../Vector-1.0/Vector/include/cacheability.h
 instrset.h
@@ -95,9 +97,11 @@ vectori128.h
 -
 
 /home/romain/Dropbox/Perso/Mandelbrot_test/Mandelbrot-0.1/src/Mandelbrot.cpp
-SFML/Window.hpp
+SFML/Graphics.hpp
 -
 Mandelbrot.hpp
+-
+string
 -
 
 Vector-1.0/Vector/VectorConfig.hpp
