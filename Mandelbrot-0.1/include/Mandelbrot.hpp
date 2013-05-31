@@ -8,20 +8,21 @@
 #define MAX_FPS 60
 #define REAL    double
 
+
 template < typename T >
-static inline constexpr T sqr( T x ) {
+static finline constexpr T sqr( T x ) {
     return x * x;
 }
 
 template < typename T >
-static inline T module( T r, T i ) {
+static finline T module( T r, T i ) {
     return sqr( r ) + sqr( i );
 }
 
 class Mandelbrot {
 public:
 
-    inline Mandelbrot( sf::RenderWindow & window ) :
+    finline Mandelbrot( sf::RenderWindow & window ) :
         m_window( window ),
         m_backgound( window.GetWidth( ), window.GetHeight( ) ),
         m_sprite( m_backgound )
@@ -29,10 +30,10 @@ public:
 
     }
 
-    inline ~Mandelbrot( void ) { };
+    finline ~Mandelbrot( void ) { };
 
     template < bool lazy = true >
-    inline void Generate(
+    finline void Generate(
         REAL x1, REAL x2, REAL y1, REAL y2, uint32_t PRECISION
     ) {
         static REAL lx1 = 0;
@@ -76,7 +77,7 @@ public:
                 uint32_t i;
                 for (
                     i = 0;
-                    ( i <= imax ) && ( module( z_r, z_i ) < 4 );
+                    ( i < imax ) && ( module( z_r, z_i ) < 4 );
                     ++i
                 ) {
                     REAL tmp = z_r;
@@ -84,7 +85,7 @@ public:
                     z_i = 2 * z_i * tmp + c_i;
                 }
 
-                if ( i >= imax - 1 ) {
+                if ( i == imax ) {
                     m_backgound.SetPixel(
                         x, y,
                         sf::Color( 0, 0, 0 )
@@ -94,9 +95,9 @@ public:
                     m_backgound.SetPixel(
                         x, y,
                         sf::Color(
-                            static_cast< uint64_t >( ismooth * 21 ) % 255,
-                            static_cast< uint64_t >( ismooth * 22 ) % 255,
-                            static_cast< uint64_t >( ismooth * 23 ) % 255
+                            static_cast< uint64_t >( ismooth * 3 ) % 255,
+                            static_cast< uint64_t >( ismooth * 5 ) % 255,
+                            static_cast< uint64_t >( ismooth * 7 ) % 255
                         )
                     );
                 }
@@ -110,7 +111,7 @@ public:
         }
     }
 
-    inline void Draw( void )
+    finline void Draw( void )
     {
         m_window.Draw( m_sprite );
     }
