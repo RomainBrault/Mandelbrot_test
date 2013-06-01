@@ -114,9 +114,9 @@ int main( int argc, char* argv[] ) {
 
         if ( drag_on_l == true ) {
             REAL dep_x =
-                ( x2 - x1 ) * ( input.GetMouseX( ) - mp_org_x_l ) / 10000.f;
+                ( x2 - x1 ) * ( input.GetMouseX( ) - mp_org_x_l ) / 5000.f;
             REAL dep_y =
-                ( x2 - x1 ) * ( input.GetMouseY( ) - mp_org_y_l ) / 10000.f;
+                ( x2 - x1 ) * ( input.GetMouseY( ) - mp_org_y_l ) / 5000.f;
             x1 += dep_x;
             x2 += dep_x;
             y1 += dep_y;
@@ -125,7 +125,7 @@ int main( int argc, char* argv[] ) {
 
         if ( drag_on_r == true ) {
             REAL dep = 1 - (
-                1 / ( 1 - ( ( input.GetMouseY( ) - mp_org_y_r ) / 10000.f ) )
+                1 / ( 1 - ( ( input.GetMouseY( ) - mp_org_y_r ) / 5000.f ) )
             );
             x1 += ( x2 - x1 ) * dep;
             x2 -= ( x2 - x1 ) * dep;

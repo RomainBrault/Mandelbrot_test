@@ -63,13 +63,10 @@ public:
         uint32_t img_x = m_backgound.GetWidth( );
         uint32_t img_y = m_backgound.GetHeight( );
         uint32_t imax;
-        if ( -std::log( x2 - x1 ) < 2.8 ) {
-            imax = PRECISION;
-        } else {
-            imax = static_cast< uint32_t >(
-                std::log( -std::log( x2 - x1 ) ) * PRECISION
-            );
-        }
+        double recall = -std::log( x2 - x1 );
+        recall < 1 ?
+            imax = PRECISION :
+            imax = static_cast< uint32_t >( recall * PRECISION );
 
         REAL zoom_x = img_x / ( x2 - x1 );
         REAL zoom_y = img_y / ( y2 - y1 );
