@@ -6,14 +6,32 @@ int main( int argc, char* argv[] ) {
 
     if ( argc < 4 ) {
         std::cerr << "usage: " << argv[0]
-                  << " <width> <height> <precision>" << std::endl;
+                  << " <width> <height> <precision> [chanels]" << std::endl;
         return -1;
     }
 
-    sf::RenderWindow App(
-        sf::VideoMode( std::atoi( argv[ 1 ] ), std::atoi( argv[ 2 ] ), 32 ),
-        "Mandelbrot"
-    );
+    uint32_t width     = std::atoi( argv[ 1 ] );
+    uint32_t height    = std::atoi( argv[ 2 ] );
+    uint32_t precision = std::atoi( argv[ 3 ] );
+
+    chanel fcol;
+
+    if ( argc == 5 ) {
+        std::string col = std::string( argv[ 4 ] );
+        if ( col.find( 'r' ) == std::string::npos ) fcol.r = 0;
+        else fcol.r = 1;
+        if ( col.find( 'g' ) == std::string::npos ) fcol.g = 0;
+        else fcol.g = 1;
+        if ( col.find( 'b' ) == std::string::npos ) fcol.b = 0;
+        else fcol.b = 1;
+    }
+    else {
+        fcol.r = 1;
+        fcol.g = 0;
+        fcol.b = 0;
+    }
+
+    sf::RenderWindow App( sf::VideoMode( width, height, 32 ), "Mandelbrot" );
     App.UseVerticalSync( true );
     App.Window::SetFramerateLimit( MAX_FPS );
 
@@ -22,16 +40,20 @@ int main( int argc, char* argv[] ) {
     Mandelbrot mandel( App );
     sf::Clock clock;
 
-    REAL x1 = -2.1;
-    REAL x2 =  0.6;
-    REAL y1 = -1.2;
-    REAL y2 =  1.2;
+    REAL scale =
+        ( 600   / static_cast< REAL >( 800    ) ) *
+        ( width / static_cast< REAL >( height ) );
 
-    bool   drag_on_l  = false;
+    REAL x1 = static_cast< REAL >( -2.1 ) * scale;
+    REAL x2 = static_cast< REAL >(  0.6 ) * scale;
+    REAL y1 = static_cast< REAL >( -1.2 );
+    REAL y2 = static_cast< REAL >(  1.2 );
+
+    bool drag_on_l  = false;
     REAL mp_org_x_l = 0;
     REAL mp_org_y_l = 0;
 
-    bool   drag_on_r  = false;
+    bool drag_on_r  = false;
     REAL mp_org_y_r = 0;
 
     while ( App.IsOpened( ) ) {
@@ -111,7 +133,7 @@ int main( int argc, char* argv[] ) {
             y2 -= ( y2 - y1 ) * dep;
         }
 
-        mandel.Generate< LAZY >( x1, x2, y1, y2,  std::atoi( argv[ 3 ] ) );
+        mandel.Generate< LAZY >( x1, x2, y1, y2, precision, fcol );
         mandel.Draw( );
 
         float framerate =

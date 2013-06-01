@@ -9,15 +9,25 @@
 #define REAL    double
 
 
+typedef struct chanel {
+    uint32_t r;
+    uint32_t g;
+    uint32_t b;
+} chanel;
+
+namespace std {
+
 template < typename T >
-static finline constexpr T sqr( T x ) {
+static finline constexpr T sqr( const T & x ) {
     return x * x;
 }
 
 template < typename T >
-static finline T module( T r, T i ) {
-    return sqr( r ) + sqr( i );
+static finline constexpr T norm( const T & r, const T & i ) {
+    return std::sqr( r ) + std::sqr( i );
 }
+
+} // namespace std
 
 class Mandelbrot {
 public:
@@ -34,7 +44,7 @@ public:
 
     template < bool lazy = true >
     finline void Generate(
-        REAL x1, REAL x2, REAL y1, REAL y2, uint32_t PRECISION
+        REAL x1, REAL x2, REAL y1, REAL y2, uint32_t PRECISION, chanel & fcol
     ) {
         static REAL lx1 = 0;
         static REAL lx2 = 0;
@@ -65,41 +75,60 @@ public:
         REAL zoom_y = img_y / ( y2 - y1 );
 
 #pragma omp parallel for collapse( 2 )
-        for ( uint32_t x = 0; x < img_x; ++x ) {
-            for ( uint32_t y = 0; y < img_y; ++y ) {
+        for ( uint32_t y = 0; y < img_y; ++y ) {
+            for ( uint32_t x = 0; x < img_x; x += 4 ) {
 
-                REAL c_r = x / zoom_x + x1;
-                REAL c_i = y / zoom_y + y1;
+                Vec4d c_r( x, x + 1, x + 2, x + 3 ); c_r = c_r / zoom_x + x1;
+                Vec4d c_i( y ); c_i = c_i / zoom_y + y1;
 
-                REAL z_r = 0;
-                REAL z_i = 0;
+                Vec4d z_r( 0 );
+                REAL  z_r_t[ 4 ];
 
-                uint32_t i;
+                Vec4d z_i( 0 );
+                REAL  z_i_t[ 4 ];
+
+                Vec4q    iter( 0 );
+                uint64_t iter_t[ 4 ];
+
+                uint64_t go_on_t[ 4 ] = { 1, 1, 1, 1 };
+
                 for (
-                    i = 0;
-                    ( i < imax ) && ( module( z_r, z_i ) < 4 );
+                    uint32_t i = 0;
+                    ( i < imax ) &&
+                    ( go_on_t[ 0 ] || go_on_t[ 1 ] ||
+                      go_on_t[ 2 ] || go_on_t[ 3 ] );
                     ++i
                 ) {
-                    REAL tmp = z_r;
-                    z_r = sqr( z_r ) - sqr( z_i ) + c_r;
+                    Vec4d tmp( z_r );
+                    z_r = std::sqr( z_r ) - std::sqr( z_i ) + c_r;
                     z_i = 2 * z_i * tmp + c_i;
+                    Vec4q go_on( std::norm( z_r, z_i ) < 4 );
+                    go_on = -go_on;
+                    iter += go_on;
+                    go_on.store( go_on_t );
                 }
 
-                if ( i == imax ) {
-                    m_backgound.SetPixel(
-                        x, y,
-                        sf::Color( 0, 0, 0 )
-                    );
-                } else {
-                    REAL ismooth = static_cast< REAL >( i );
-                    m_backgound.SetPixel(
-                        x, y,
-                        sf::Color(
-                            static_cast< uint64_t >( ismooth * 3 ) % 255,
-                            static_cast< uint64_t >( ismooth * 5 ) % 255,
-                            static_cast< uint64_t >( ismooth * 7 ) % 255
-                        )
-                    );
+                iter.store( iter_t );
+                z_i.store( z_i_t );
+                z_r.store( z_r_t );
+                for ( uint32_t i = 0; i < 4; ++i ) {
+                    if ( iter_t[ i ] == imax ) {
+                        m_backgound.SetPixel(
+                            x + i, y,
+                            sf::Color( 0, 0, 0 )
+                        );
+                    } else {
+                        REAL ismooth = 255 *
+                            static_cast< REAL >( iter_t[ i ] ) / imax;
+                        m_backgound.SetPixel(
+                            x + i, y,
+                            sf::Color(
+                                fcol.r * ismooth,
+                                fcol.g * ismooth,
+                                fcol.b * ismooth
+                            )
+                        );
+                    }
                 }
             }
         }
