@@ -49,7 +49,7 @@ CMAKE_CXX_COMPILER:FILEPATH=/opt/intel/composer_xe_2013.2.146/bin/intel64/icpc
 
 //Choose the type of build, options are: None Debug Release RelWithDebInfo
 // MinSizeRel.
-CMAKE_CXX_FLAGS:STRING=-g -fpic -Wcheck -Werror -openmp -Wall -fno-common -std=c++11 -fno-gnu-keywords
+CMAKE_CXX_FLAGS:STRING= -openmp -g -fpic -Wcheck -Werror -Wall -fno-common -std=c++11 -fno-gnu-keywords
 
 //Choose the type of build, options are: None Debug Release RelWithDebInfo
 // MinSizeRel.
@@ -234,6 +234,12 @@ Mandelbrot_BINARY_DIR:STATIC=/home/romain/Dropbox/Perso/Mandelbrot_test/build
 
 //Value Computed by CMake
 Mandelbrot_SOURCE_DIR:STATIC=/home/romain/Dropbox/Perso/Mandelbrot_test
+
+//C++ compiler flags for OpenMP parallization
+OpenMP_CXX_FLAGS:STRING=-openmp
+
+//C compiler flags for OpenMP parallization
+OpenMP_C_FLAGS:STRING=-fopenmp
 
 //Path to a library.
 SFML_AUDIO_LIBRARY_DEBUG:FILEPATH=SFML_AUDIO_LIBRARY_DEBUG-NOTFOUND
@@ -438,6 +444,8 @@ CPACK_SOURCE_TZ-ADVANCED:INTERNAL=1
 CPACK_SOURCE_ZIP-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CXX11_FEATURE_LIST
 CXX11_FEATURE_LIST-ADVANCED:INTERNAL=1
+//Details about finding OpenMP
+FIND_PACKAGE_MESSAGE_DETAILS_OpenMP:INTERNAL=[-fopenmp][-openmp][v()]
 //C++11 support for "auto" (N2546)
 HAS_CXX11_AUTO:INTERNAL=TRUE
 //C++11 support for "chrono"
@@ -474,6 +482,12 @@ HAVE_STDDEF_H:INTERNAL=1
 HAVE_STDINT_H:INTERNAL=1
 //Have include sys/types.h
 HAVE_SYS_TYPES_H:INTERNAL=1
+//ADVANCED property for variable: OpenMP_CXX_FLAGS
+OpenMP_CXX_FLAGS-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OpenMP_C_FLAGS
+OpenMP_C_FLAGS-ADVANCED:INTERNAL=1
+//Test OpenMP_FLAG_DETECTED
+OpenMP_FLAG_DETECTED:INTERNAL=1
 //ADVANCED property for variable: SFML_AUDIO_LIBRARY_DEBUG
 SFML_AUDIO_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: SFML_AUDIO_LIBRARY_RELEASE

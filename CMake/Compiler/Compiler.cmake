@@ -1,3 +1,5 @@
+FIND_PACKAGE(OpenMP)
+
 MESSAGE(STATUS ${COMPILER_INFORMATION})
 IF(${CMAKE_C_COMPILER} MATCHES icc)
     SET(CXX_COMPILER "INTEL_C_COMPILER")
@@ -26,7 +28,7 @@ ELSEIF(${CMAKE_C_COMPILER} MATCHES gcc)
 ENDIF()
 IF(${CMAKE_CXX_COMPILER} MATCHES icpc)
     SET(CXX_COMPILER "INTEL_CXX_COMPILER")
-    SET(CMAKE_CXX_FLAGS "-g -fpic -Wcheck -Werror -openmp -Wall -fno-common -std=c++11 -fno-gnu-keywords"
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS} -g -fpic -Wcheck -Werror -Wall -fno-common -std=c++11 -fno-gnu-keywords"
                                                   CACHE STRING
         ${CMAKE_FLAGS_HELP} FORCE)
     SET(CMAKE_CXX_FLAGS_DEBUG "-O0 -g"            CACHE STRING
@@ -39,14 +41,14 @@ IF(${CMAKE_CXX_COMPILER} MATCHES icpc)
         ${CMAKE_FLAGS_HELP} FORCE)
 ELSEIF(${CMAKE_CXX_COMPILER} MATCHES g\\+\\+)
     SET(CXX_COMPILER "GNU_CXX_COMPILER")
-    SET(CMAKE_CXX_FLAGS "-g -fpic -Wall -fno-common -Wshadow -Wextra -pedantic -std=c++11 -save-temps"
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS} -g -fpic -Wall -fno-common -Wshadow -Wextra -pedantic -std=c++11 -save-temps"
                                                   CACHE STRING
         ${CMAKE_FLAGS_HELP} FORCE)
     SET(CMAKE_CXX_FLAGS_DEBUG "-O0 -g"            CACHE STRING
         ${CMAKE_FLAGS_HELP} FORCE)
     SET(CMAKE_CXX_FLAGS_MINSIZEREL "-Os -DNDEBUG" CACHE STRING
         ${CMAKE_FLAGS_HELP} FORCE)
-    SET(CMAKE_CXX_FLAGS_RELEASE "-Ofast -flto -fopenmp -DNDEBUG" CACHE STRING
+    SET(CMAKE_CXX_FLAGS_RELEASE "-Ofast -flto -DNDEBUG" CACHE STRING
         ${CMAKE_FLAGS_HELP} FORCE)
     SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g"   CACHE STRING
         ${CMAKE_FLAGS_HELP} FORCE)
