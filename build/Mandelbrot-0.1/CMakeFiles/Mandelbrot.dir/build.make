@@ -84,6 +84,8 @@ Mandelbrot_EXTERNAL_OBJECTS =
 
 Mandelbrot-0.1/Mandelbrot: Mandelbrot-0.1/CMakeFiles/Mandelbrot.dir/src/Mandelbrot.cpp.o
 Mandelbrot-0.1/Mandelbrot: Mandelbrot-0.1/CMakeFiles/Mandelbrot.dir/build.make
+Mandelbrot-0.1/Mandelbrot: /usr/lib64/libtbb.so
+Mandelbrot-0.1/Mandelbrot: /usr/lib64/libtbbmalloc.so
 Mandelbrot-0.1/Mandelbrot: Vector-1.0/Vector/libVector.a
 Mandelbrot-0.1/Mandelbrot: /usr/lib64/libsfml-system.so
 Mandelbrot-0.1/Mandelbrot: /usr/lib64/libsfml-window.so

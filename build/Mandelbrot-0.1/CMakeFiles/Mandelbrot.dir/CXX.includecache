@@ -11,6 +11,10 @@ vectorclass.h
 -
 iostream
 -
+tbb/parallel_for.h
+-
+tbb/blocked_range.h
+-
 
 ../Vector-1.0/Vector/include/cacheability.h
 instrset.h

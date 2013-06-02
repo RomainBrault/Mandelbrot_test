@@ -130,7 +130,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELEASE:STRING=
 CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO:STRING=
 
 //path to cmake modules
-CMAKE_MODULE_PATH:STRING=/home/romain/Dropbox/Perso/Mandelbrot_test/CMake/Modules/Hwloc;/home/romain/Dropbox/Perso/Mandelbrot_test/CMake/Modules/CUDA;/home/romain/Dropbox/Perso/Mandelbrot_test/CMake/Modules/GooglePerfTools;/home/romain/Dropbox/Perso/Mandelbrot_test/CMake/Modules/OPENCL;/home/romain/Dropbox/Perso/Mandelbrot_test/CMake/Modules/SFML
+CMAKE_MODULE_PATH:STRING=/home/romain/Dropbox/Perso/Mandelbrot_test/CMake/Modules/Hwloc;/home/romain/Dropbox/Perso/Mandelbrot_test/CMake/Modules/CUDA;/home/romain/Dropbox/Perso/Mandelbrot_test/CMake/Modules/GooglePerfTools;/home/romain/Dropbox/Perso/Mandelbrot_test/CMake/Modules/OPENCL;/home/romain/Dropbox/Perso/Mandelbrot_test/CMake/Modules/SFML;/home/romain/Dropbox/Perso/Mandelbrot_test/CMake/Modules/TBB
 
 //Path to a program.
 CMAKE_NM:FILEPATH=/usr/bin/nm
@@ -276,6 +276,33 @@ SFML_WINDOW_LIBRARY_RELEASE:FILEPATH=/usr/lib64/libsfml-window.so
 
 //Make as a static library [ON] or shared library [OFF].
 STATIC_LIB:BOOL=ON
+
+//TBB debug library directory
+TBB_DEBUG_LIBRARY_DIRS:PATH=/opt/intel/composer_xe_2013.2.146/tbb/lib/intel64
+
+//Path to a file.
+TBB_INCLUDE_DIR:PATH=/usr/include
+
+//TBB include directory
+TBB_INCLUDE_DIRS:PATH=/usr/include
+
+//Intel TBB install directory
+TBB_INSTALL_DIR:PATH=/opt/intel/tbb;/usr/local/include;/usr/include
+
+//Path to a library.
+TBB_LIBRARY:FILEPATH=/usr/lib64/libtbb.so
+
+//Path to a library.
+TBB_LIBRARY_DEBUG:FILEPATH=/opt/intel/composer_xe_2013.2.146/tbb/lib/intel64/libtbb_debug.so
+
+//TBB library directory
+TBB_LIBRARY_DIRS:PATH=/usr/lib64
+
+//Path to a library.
+TBB_MALLOC_LIBRARY:FILEPATH=/usr/lib64/libtbbmalloc.so
+
+//Path to a library.
+TBB_MALLOC_LIBRARY_DEBUG:FILEPATH=/opt/intel/composer_xe_2013.2.146/tbb/lib/intel64/libtbbmalloc_debug.so
 
 //Value Computed by CMake
 Vector_BINARY_DIR:STATIC=/home/romain/Dropbox/Perso/Mandelbrot_test/build/Vector-1.0
@@ -508,6 +535,24 @@ SFML_SYSTEM_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
 SFML_WINDOW_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: SFML_WINDOW_LIBRARY_RELEASE
 SFML_WINDOW_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: TBB_DEBUG_LIBRARY_DIRS
+TBB_DEBUG_LIBRARY_DIRS-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: TBB_INCLUDE_DIR
+TBB_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: TBB_INCLUDE_DIRS
+TBB_INCLUDE_DIRS-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: TBB_INSTALL_DIR
+TBB_INSTALL_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: TBB_LIBRARY
+TBB_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: TBB_LIBRARY_DEBUG
+TBB_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: TBB_LIBRARY_DIRS
+TBB_LIBRARY_DIRS-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: TBB_MALLOC_LIBRARY
+TBB_MALLOC_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: TBB_MALLOC_LIBRARY_DEBUG
+TBB_MALLOC_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: XIAR
 XIAR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: XILD

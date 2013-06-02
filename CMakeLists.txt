@@ -7,6 +7,7 @@ SET(CMAKE_MODULE_PATH
 	"${CMAKE_SOURCE_DIR}/CMake/Modules/GooglePerfTools"
 	"${CMAKE_SOURCE_DIR}/CMake/Modules/OPENCL"
 	"${CMAKE_SOURCE_DIR}/CMake/Modules/SFML"
+	"${CMAKE_SOURCE_DIR}/CMake/Modules/TBB"
 	CACHE STRING "path to cmake modules" FORCE)
 
 ADD_SUBDIRECTORY(Vector-1.0)

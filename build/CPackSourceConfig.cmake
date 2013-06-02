@@ -33,7 +33,7 @@ SET(CPACK_IGNORE_FILES "/CVS/;/\\.svn/;/\\.bzr/;/\\.hg/;/\\.git/;\\.swp$;\\.#;/#
 SET(CPACK_INSTALLED_DIRECTORIES "/home/romain/Dropbox/Perso/Mandelbrot_test;/")
 SET(CPACK_INSTALL_CMAKE_PROJECTS "")
 SET(CPACK_INSTALL_PREFIX "/home/romain/Dropbox/Perso/Mandelbrot_test")
-SET(CPACK_MODULE_PATH "/home/romain/Dropbox/Perso/Mandelbrot_test/CMake/Modules/Hwloc;/home/romain/Dropbox/Perso/Mandelbrot_test/CMake/Modules/CUDA;/home/romain/Dropbox/Perso/Mandelbrot_test/CMake/Modules/GooglePerfTools;/home/romain/Dropbox/Perso/Mandelbrot_test/CMake/Modules/OPENCL;/home/romain/Dropbox/Perso/Mandelbrot_test/CMake/Modules/SFML")
+SET(CPACK_MODULE_PATH "/home/romain/Dropbox/Perso/Mandelbrot_test/CMake/Modules/Hwloc;/home/romain/Dropbox/Perso/Mandelbrot_test/CMake/Modules/CUDA;/home/romain/Dropbox/Perso/Mandelbrot_test/CMake/Modules/GooglePerfTools;/home/romain/Dropbox/Perso/Mandelbrot_test/CMake/Modules/OPENCL;/home/romain/Dropbox/Perso/Mandelbrot_test/CMake/Modules/SFML;/home/romain/Dropbox/Perso/Mandelbrot_test/CMake/Modules/TBB")
 SET(CPACK_NSIS_DISPLAY_NAME "Mandelbrot ..1")
 SET(CPACK_NSIS_INSTALLER_ICON_CODE "")
 SET(CPACK_NSIS_INSTALLER_MUI_ICON_CODE "")

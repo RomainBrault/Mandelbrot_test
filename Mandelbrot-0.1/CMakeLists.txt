@@ -10,7 +10,7 @@ INCLUDE_DIRECTORIES(
     "${PROJECT_BINARY_DIR}/Vector-1.0/Vector"
 )
 
-find_package( SFML 1.6 REQUIRED system window graphics network audio )
+FIND_PACKAGE( SFML 1.6 REQUIRED system window graphics network audio )
 
 # Check for C++11
 INCLUDE("${CMAKE_SOURCE_DIR}/CMake/cpp11/CheckCXX11Features.cmake")
@@ -18,6 +18,15 @@ FOREACH(flag ${CXX11_FEATURE_LIST})
     SET_PROPERTY(TARGET Mandelbrot
       APPEND PROPERTY COMPILE_DEFINITIONS ${flag})
 ENDFOREACH(flag ${CXX11_FEATURE_LIST})
+
+FIND_PACKAGE( TBB REQUIRED )
+IF(NOT TBB_FOUND)
+	MESSAGE(FATAL "TBB not found. Example project will not be built.")
+ELSE(NOT TBB_FOUND)
+	INCLUDE_DIRECTORIES( ${TBB_INCLUDE_DIRS} )
+	LINK_DIRECTORIES( ${TBB_LIBRARY_DIRS} )
+	TARGET_LINK_LIBRARIES(Mandelbrot ${TBB_LIBRARIES})
+ENDIF(NOT TBB_FOUND)
 
 TARGET_LINK_LIBRARIES(Mandelbrot Vector ${SFML_LIBRARIES})
 

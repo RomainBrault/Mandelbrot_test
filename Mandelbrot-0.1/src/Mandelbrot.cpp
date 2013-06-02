@@ -2,6 +2,11 @@
 #include <Mandelbrot.hpp>
 #include <string>
 
+enum tprecision_t : uint32_t {
+    double_precision = 2,
+    simple_precision = 1
+};
+
 int main( int argc, char* argv[] ) {
 
     if ( argc < 4 ) {
@@ -13,6 +18,8 @@ int main( int argc, char* argv[] ) {
     uint32_t width     = std::atoi( argv[ 1 ] );
     uint32_t height    = std::atoi( argv[ 2 ] );
     uint32_t precision = std::atoi( argv[ 3 ] );
+
+    tprecision_t tprecision = simple_precision;
 
     chanel fcol;
 
@@ -40,21 +47,21 @@ int main( int argc, char* argv[] ) {
     Mandelbrot mandel( App );
     sf::Clock clock;
 
-    REAL scale =
-        ( 600   / static_cast< REAL >( 800    ) ) *
-        ( width / static_cast< REAL >( height ) );
+    double scale =
+        ( 600   / static_cast< double >( 800    ) ) *
+        ( width / static_cast< double >( height ) );
 
-    REAL x1 = static_cast< REAL >( -2.1 ) * scale;
-    REAL x2 = static_cast< REAL >(  0.6 ) * scale;
-    REAL y1 = static_cast< REAL >( -1.2 );
-    REAL y2 = static_cast< REAL >(  1.2 );
+    double x1 = static_cast< double >( -2.1 ) * scale;
+    double x2 = static_cast< double >(  0.6 ) * scale;
+    double y1 = static_cast< double >( -1.2 );
+    double y2 = static_cast< double >(  1.2 );
 
-    bool drag_on_l  = false;
-    REAL mp_org_x_l = 0;
-    REAL mp_org_y_l = 0;
+    bool   drag_on_l  = false;
+    double mp_org_x_l = 0;
+    double mp_org_y_l = 0;
 
-    bool drag_on_r  = false;
-    REAL mp_org_y_r = 0;
+    bool   drag_on_r  = false;
+    double mp_org_y_r = 0;
 
     while ( App.IsOpened( ) ) {
         sf::Event Event;
@@ -77,8 +84,8 @@ int main( int argc, char* argv[] ) {
                 ( Event.Type == sf::Event::MouseButtonPressed )
             ) {
                 if ( Event.MouseButton.Button == sf::Mouse::Left ) {
-                    mp_org_x_l = static_cast< REAL >( input.GetMouseX( ) );
-                    mp_org_y_l = static_cast< REAL >( input.GetMouseY( ) );
+                    mp_org_x_l = static_cast< double >( input.GetMouseX( ) );
+                    mp_org_y_l = static_cast< double >( input.GetMouseY( ) );
                     drag_on_l  = true;
                 }
             }
@@ -97,7 +104,7 @@ int main( int argc, char* argv[] ) {
                 ( Event.Type == sf::Event::MouseButtonPressed )
             ) {
                 if ( Event.MouseButton.Button == sf::Mouse::Right ) {
-                    mp_org_y_r = static_cast< REAL >( input.GetMouseY( ) );
+                    mp_org_y_r = static_cast< double >( input.GetMouseY( ) );
                     drag_on_r  = true;
                 }
             }
@@ -110,12 +117,28 @@ int main( int argc, char* argv[] ) {
                     drag_on_r = false;
                 }
             }
+
+            if ( Event.Type == sf::Event::KeyPressed ) {
+                if ( Event.Key.Code == sf::Key::P ) {
+                    switch ( tprecision ) {
+                    case simple_precision:
+                        tprecision = double_precision;
+                        break;
+                    case double_precision:
+                        tprecision = simple_precision;
+                        break;
+                    default:
+                        break;
+                    }
+                }
+            }
+
         }
 
         if ( drag_on_l == true ) {
-            REAL dep_x =
+            double dep_x =
                 ( x2 - x1 ) * ( input.GetMouseX( ) - mp_org_x_l ) / 5000.f;
-            REAL dep_y =
+            double dep_y =
                 ( x2 - x1 ) * ( input.GetMouseY( ) - mp_org_y_l ) / 5000.f;
             x1 += dep_x;
             x2 += dep_x;
@@ -124,7 +147,7 @@ int main( int argc, char* argv[] ) {
         }
 
         if ( drag_on_r == true ) {
-            REAL dep = 1 - (
+            double dep = 1 - (
                 1 / ( 1 - ( ( input.GetMouseY( ) - mp_org_y_r ) / 5000.f ) )
             );
             x1 += ( x2 - x1 ) * dep;
@@ -133,7 +156,20 @@ int main( int argc, char* argv[] ) {
             y2 -= ( y2 - y1 ) * dep;
         }
 
-        mandel.Generate< LAZY >( x1, x2, y1, y2, precision, fcol );
+        switch ( tprecision ) {
+        case simple_precision:
+            mandel.Generate< LAZY, ker_float >(
+                x1, x2, y1, y2, precision, fcol
+            );
+            break;
+        case double_precision:
+            mandel.Generate< LAZY, ker_double >(
+                x1, x2, y1, y2, precision, fcol
+            );
+            break;
+        default:
+            break;
+        }
         mandel.Draw( );
 
         float framerate =
