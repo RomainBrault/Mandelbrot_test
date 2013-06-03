@@ -44,7 +44,7 @@ public:
     ) :
         img_x( a_img_x ), x1( a_x1 ), y1( a_y1 ), imax( a_imax ),
         zoom_x( a_zoom_x ), zoom_y( a_zoom_y ), fcol( a_fcol ),
-        m_backgound( a_background ), tstart( 4 * a_img_x / 4 )
+        m_backgound( a_background ), tstart( 4 * ( a_img_x / 4 ) )
     { };
     ~ker_double( void )
     { };
@@ -56,7 +56,7 @@ public:
             c_i = c_i / zoom_y + y1;
             double c_i_s = y / zoom_y + y1;
 
-            for ( uint32_t x = 0; x < img_x; x += 4 ) {
+            for ( uint32_t x = 0; x < tstart; x += 4 ) {
 
                 Vec4d c_r( x, x + 1, x + 2, x + 3 );
                 c_r = c_r / zoom_x + x1;
@@ -180,7 +180,7 @@ public:
             c_i = c_i / zoom_y + y1;
             float c_i_s = y / zoom_y + y1;
 
-            for ( uint32_t x = 0; x < img_x; x += 8 ) {
+            for ( uint32_t x = 0; x < tstart; x += 8 ) {
 
                 Vec8f c_r( x, x + 1, x + 2, x + 3, x + 4, x + 5, x + 6, x + 7 );
                 c_r = c_r / zoom_x + x1;
@@ -336,7 +336,10 @@ public:
             fcol, m_backgound
         );
 
-        tbb::parallel_for( tbb::blocked_range< uint32_t >( 0, img_y ), kernel );
+        tbb::affinity_partitioner ap;
+        tbb::parallel_for(
+            tbb::blocked_range< uint32_t >( 0, img_y ), kernel, ap
+        );
 
         if ( lazy == true ) {
             lx1 = x1;
