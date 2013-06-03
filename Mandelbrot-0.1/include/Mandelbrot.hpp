@@ -32,9 +32,9 @@ static finline constexpr T norm( const T & r, const T & i ) {
 
 
 
-class ker_double {
+class ker_double_sse {
 public:
-    ker_double(
+    ker_double_sse(
         uint32_t a_img_x,
         double a_x1, double a_y1,
         uint32_t a_imax,
@@ -46,10 +46,10 @@ public:
         zoom_x( a_zoom_x ), zoom_y( a_zoom_y ), fcol( a_fcol ),
         m_backgound( a_background ), tstart( 4 * ( a_img_x / 4 ) )
     { };
-    ~ker_double( void )
+    ~ker_double_sse( void )
     { };
 
-    void operator() ( const tbb::blocked_range< uint32_t > & range ) const {
+    void operator( ) ( const tbb::blocked_range< uint32_t > & range ) const {
         for ( uint32_t y = range.begin( ); y < range.end( ); ++y ) {
 
             Vec4d c_i( y );
@@ -61,11 +61,11 @@ public:
                 Vec4d c_r( x, x + 1, x + 2, x + 3 );
                 c_r = c_r / zoom_x + x1;
 
-                Vec4d z_r( 0 );
-                double  z_r_t[ 4 ];
+                Vec4d  z_r( 0 );
+                double z_r_t[ 4 ];
 
-                Vec4d z_i( 0 );
-                double  z_i_t[ 4 ];
+                Vec4d  z_i( 0 );
+                double z_i_t[ 4 ];
 
                 Vec4q    iter( 0 );
                 uint64_t iter_t[ 4 ];
@@ -79,10 +79,10 @@ public:
                       go_on_t[ 2 ] || go_on_t[ 3 ] );
                     ++i
                 ) {
-                    Vec4d tmp( z_r );
+                    Vec4d const tmp( z_r );
                     z_r = std::sqr( z_r ) - std::sqr( z_i ) + c_r;
                     z_i = 2 * z_i * tmp + c_i;
-                    Vec4q go_on( std::norm( z_r, z_i ) < 4 );
+                    Vec4q const go_on( std::norm( z_r, z_i ) < 4 );
                     iter += -go_on;
                     go_on.store_a( go_on_t );
                 }
@@ -144,20 +144,20 @@ public:
     }
 
 private:
-    uint32_t img_x;
-    double x1;
-    double y1;
-    uint32_t imax;
-    double zoom_x;
-    double zoom_y;
+    uint32_t const img_x;
+    double const x1;
+    double const y1;
+    uint32_t const imax;
+    double const zoom_x;
+    double const zoom_y;
     chanel const & fcol;
     sf::Image & m_backgound;
-    uint32_t tstart;
+    uint32_t const tstart;
 };
 
-class ker_float {
+class ker_float_sse {
 public:
-    ker_float(
+    ker_float_sse(
         uint32_t a_img_x,
         float a_x1, float a_y1,
         uint32_t a_imax,
@@ -167,18 +167,18 @@ public:
     ) :
         img_x( a_img_x ), x1( a_x1 ), y1( a_y1 ), imax( a_imax ),
         zoom_x( a_zoom_x ), zoom_y( a_zoom_y ), fcol( a_fcol ),
-        m_backgound( a_background ), tstart( 8 * a_img_x / 8 )
+        m_backgound( a_background )
     { };
-    ~ker_float( void )
+    ~ker_float_sse( void )
     { };
 
-    void operator() ( const tbb::blocked_range< uint32_t > & range ) const {
-        uint32_t const tstart = 8 * ( img_x / 8 );
-        for ( uint32_t y = range.begin(); y < range.end(); ++y ) {
+    void operator( ) ( const tbb::blocked_range< uint32_t > & range ) const {
+        uint32_t tstart = 8 * ( img_x / 8 );
+        for ( uint32_t y = range.begin( ); y < range.end( ); ++y ) {
 
             Vec8f c_i( y );
             c_i = c_i / zoom_y + y1;
-            float c_i_s = y / zoom_y + y1;
+            float const c_i_s = y / zoom_y + y1;
 
             for ( uint32_t x = 0; x < tstart; x += 8 ) {
 
@@ -205,10 +205,10 @@ public:
                       go_on_t[ 6 ] || go_on_t[ 7 ] );
                     ++i
                 ) {
-                    Vec8f tmp( z_r );
+                    Vec8f const tmp( z_r );
                     z_r = std::sqr( z_r ) - std::sqr( z_i ) + c_r;
                     z_i = 2 * z_i * tmp + c_i;
-                    Vec8i go_on( std::norm( z_r, z_i ) < 4 );
+                    Vec8i const go_on( std::norm( z_r, z_i ) < 4 );
                     iter += -go_on;
                     go_on.store_a( go_on_t );
                 }
@@ -237,14 +237,14 @@ public:
                 }
             }
             for ( uint32_t x = tstart; x < img_x; ++x ) {
-                float c_r = x / zoom_x + x1;
+                float const c_r = x / zoom_x + x1;
                 float z_r = 0;
                 float z_i = 0;
                 uint32_t i;
                 for (
                     i = 0; ( i < imax ) && ( std::norm( z_r, z_i ) < 4 ); ++i
                 ) {
-                    float tmp( z_r );
+                    float const tmp( z_r );
                     z_r = std::sqr( z_r ) - std::sqr( z_i ) + c_r;
                     z_i = 2 * z_i * tmp + c_i_s;
                 }
@@ -254,7 +254,7 @@ public:
                         sf::Color( 0, 0, 0 )
                     );
                 } else {
-                    float ismooth = 255 *
+                    float const ismooth = 255 *
                         static_cast< float >( i ) / imax;
                     m_backgound.SetPixel(
                         x, y,
@@ -270,15 +270,142 @@ public:
     }
 
 private:
-    uint32_t img_x;
-    float x1;
-    float y1;
-    uint32_t imax;
-    float zoom_x;
-    float zoom_y;
+    uint32_t const img_x;
+    float const x1;
+    float const y1;
+    uint32_t const imax;
+    float const zoom_x;
+    float const zoom_y;
     chanel const & fcol;
     sf::Image & m_backgound;
-    uint32_t tstart;
+};
+
+class ker_double {
+public:
+    ker_double(
+        uint32_t a_img_x,
+        double a_x1, double a_y1,
+        uint32_t a_imax,
+        double a_zoom_x, double a_zoom_y,
+        chanel const & a_fcol,
+        sf::Image & a_background
+    ) :
+        img_x( a_img_x ), x1( a_x1 ), y1( a_y1 ), imax( a_imax ),
+        zoom_x( a_zoom_x ), zoom_y( a_zoom_y ), fcol( a_fcol ),
+        m_backgound( a_background )
+    { };
+    ~ker_double( void )
+    { };
+
+    void operator( ) ( const tbb::blocked_range< uint32_t > & range ) const {
+        for ( uint32_t y = range.begin( ); y < range.end( ); ++y ) {
+            double const c_i = y / zoom_y + y1;
+            for ( uint32_t x = 0; x < img_x; ++x ) {
+                double const c_r = x / zoom_x + x1;
+                double z_r = 0;
+                double z_i = 0;
+                uint32_t i;
+                for (
+                    i = 0; ( i < imax ) && ( std::norm( z_r, z_i ) < 4 ); ++i
+                ) {
+                    double const tmp( z_r );
+                    z_r = std::sqr( z_r ) - std::sqr( z_i ) + c_r;
+                    z_i = 2 * z_i * tmp + c_i;
+                }
+                if ( i == imax ) {
+                    m_backgound.SetPixel(
+                        x, y,
+                        sf::Color( 0, 0, 0 )
+                    );
+                } else {
+                    double const ismooth = 255 *
+                        static_cast< double >( i ) / imax;
+                    m_backgound.SetPixel(
+                        x, y,
+                        sf::Color(
+                            fcol.r * ismooth,
+                            fcol.g * ismooth,
+                            fcol.b * ismooth
+                        )
+                    );
+                }
+            }
+        }
+    }
+
+private:
+    uint32_t const img_x;
+    double const x1;
+    double const y1;
+    uint32_t const imax;
+    double const zoom_x;
+    double const zoom_y;
+    chanel const & fcol;
+    sf::Image & m_backgound;
+};
+
+class ker_float {
+public:
+    ker_float(
+        uint32_t a_img_x,
+        float a_x1, float a_y1,
+        uint32_t a_imax,
+        float a_zoom_x, float a_zoom_y,
+        chanel const & a_fcol,
+        sf::Image & a_background
+    ) :
+        img_x( a_img_x ), x1( a_x1 ), y1( a_y1 ), imax( a_imax ),
+        zoom_x( a_zoom_x ), zoom_y( a_zoom_y ), fcol( a_fcol ),
+        m_backgound( a_background )
+    { };
+    ~ker_float( void )
+    { };
+
+    void operator( ) ( const tbb::blocked_range< uint32_t > & range ) const {
+        for ( uint32_t y = range.begin( ); y < range.end( ); ++y ) {
+            float const c_i = y / zoom_y + y1;
+            for ( uint32_t x = 0; x < img_x; ++x ) {
+                float const c_r = x / zoom_x + x1;
+                float z_r = 0;
+                float z_i = 0;
+                uint32_t i;
+                for (
+                    i = 0; ( i < imax ) && ( std::norm( z_r, z_i ) < 4 ); ++i
+                ) {
+                    float const tmp( z_r );
+                    z_r = std::sqr( z_r ) - std::sqr( z_i ) + c_r;
+                    z_i = 2 * z_i * tmp + c_i;
+                }
+                if ( i == imax ) {
+                    m_backgound.SetPixel(
+                        x, y,
+                        sf::Color( 0, 0, 0 )
+                    );
+                } else {
+                    float const ismooth = 255 *
+                        static_cast< float >( i ) / imax;
+                    m_backgound.SetPixel(
+                        x, y,
+                        sf::Color(
+                            fcol.r * ismooth,
+                            fcol.g * ismooth,
+                            fcol.b * ismooth
+                        )
+                    );
+                }
+            }
+        }
+    }
+
+private:
+    uint32_t const img_x;
+    float const x1;
+    float const y1;
+    uint32_t const imax;
+    float const zoom_x;
+    float const zoom_y;
+    chanel const & fcol;
+    sf::Image & m_backgound;
 };
 
 
@@ -302,7 +429,8 @@ public:
     template < bool lazy = true, typename KERNEL, typename T >
     finline void Generate(
         T x1, T x2, T y1, T y2,
-        uint32_t PRECISION, chanel & fcol
+        uint32_t PRECISION, chanel & fcol,
+        bool optimize
     ) {
         static T lx1 = 0;
         static T lx2 = 0;
@@ -337,9 +465,13 @@ public:
         );
 
         tbb::affinity_partitioner ap;
-        tbb::parallel_for(
-            tbb::blocked_range< uint32_t >( 0, img_y ), kernel, ap
-        );
+        if ( optimize ) {
+            tbb::parallel_for(
+                tbb::blocked_range< uint32_t >( 0, img_y ), kernel, ap
+            );
+        } else {
+            kernel( tbb::blocked_range< uint32_t >( 0, img_y ) );
+        }
 
         if ( lazy == true ) {
             lx1 = x1;

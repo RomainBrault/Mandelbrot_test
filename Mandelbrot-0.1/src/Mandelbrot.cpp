@@ -63,6 +63,8 @@ int main( int argc, char* argv[] ) {
     bool   drag_on_r  = false;
     double mp_org_y_r = 0;
 
+    bool optimize = true;
+
     while ( App.IsOpened( ) ) {
         sf::Event Event;
 
@@ -133,6 +135,12 @@ int main( int argc, char* argv[] ) {
                 }
             }
 
+            if ( Event.Type == sf::Event::KeyPressed ) {
+                if ( Event.Key.Code == sf::Key::O ) {
+                    optimize = !optimize;
+                }
+            }
+
         }
 
         if ( drag_on_l == true ) {
@@ -156,19 +164,36 @@ int main( int argc, char* argv[] ) {
             y2 -= ( y2 - y1 ) * dep;
         }
 
-        switch ( tprecision ) {
-        case simple_precision:
-            mandel.Generate< LAZY, ker_float >(
-                x1, x2, y1, y2, precision, fcol
-            );
-            break;
-        case double_precision:
-            mandel.Generate< LAZY, ker_double >(
-                x1, x2, y1, y2, precision, fcol
-            );
-            break;
-        default:
-            break;
+        if ( optimize == true ) {
+            switch ( tprecision ) {
+            case simple_precision:
+                mandel.Generate< LAZY, ker_float_sse >(
+                    x1, x2, y1, y2, precision, fcol, optimize
+                );
+                break;
+            case double_precision:
+                mandel.Generate< LAZY, ker_double_sse >(
+                    x1, x2, y1, y2, precision, fcol, optimize
+                );
+                break;
+            default:
+                break;
+            }
+        } else {
+            switch ( tprecision ) {
+            case simple_precision:
+                mandel.Generate< LAZY, ker_float >(
+                    x1, x2, y1, y2, precision, fcol, optimize
+                );
+                break;
+            case double_precision:
+                mandel.Generate< LAZY, ker_double >(
+                    x1, x2, y1, y2, precision, fcol, optimize
+                );
+                break;
+            default:
+                break;
+            }
         }
         mandel.Draw( );
 
