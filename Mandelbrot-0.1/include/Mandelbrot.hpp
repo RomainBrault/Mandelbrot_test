@@ -32,6 +32,7 @@ static finline constexpr T norm( const T & r, const T & i ) {
 
 
 
+
 class ker_double_sse {
 public:
     ker_double_sse(
@@ -62,10 +63,7 @@ public:
                 c_r = c_r / zoom_x + x1;
 
                 Vec4d  z_r( 0 );
-                double z_r_t[ 4 ];
-
                 Vec4d  z_i( 0 );
-                double z_i_t[ 4 ];
 
                 Vec4q    iter( 0 );
                 uint64_t iter_t[ 4 ];
@@ -79,17 +77,17 @@ public:
                       go_on_t[ 2 ] || go_on_t[ 3 ] );
                     ++i
                 ) {
-                    Vec4d const tmp( z_r );
-                    z_r = std::sqr( z_r ) - std::sqr( z_i ) + c_r;
-                    z_i = 2 * z_i * tmp + c_i;
-                    Vec4q const go_on( std::norm( z_r, z_i ) < 4 );
+                    Vec4q go_on = ( std::norm( z_r, z_i ) < 4 );
                     iter += -go_on;
                     go_on.store_a( go_on_t );
+                    Vec4d const p_z_r( z_r );
+                    z_r = std::sqr( z_r ) - std::sqr( z_i ) + c_r;
+                    z_i = z_i * p_z_r; z_i += z_i + c_i;
                 }
 
                 iter.store_a( iter_t );
-                z_i.store_a( z_i_t );
-                z_r.store_a( z_r_t );
+                double z_i_t[ 4 ]; z_i.store_a( z_i_t );
+                double z_r_t[ 4 ]; z_r.store_a( z_r_t );
                 for ( uint32_t i = 0; i < 4; ++i ) {
                     if ( iter_t[ i ] == imax ) {
                         m_backgound.SetPixel(
@@ -97,16 +95,26 @@ public:
                             sf::Color( 0, 0, 0 )
                         );
                     } else {
-                        double ismooth = 255 *
-                            static_cast< double >( iter_t[ i ] ) / imax;
-                        m_backgound.SetPixel(
-                            x + i, y,
-                            sf::Color(
-                                fcol.r * ismooth,
-                                fcol.g * ismooth,
-                                fcol.b * ismooth
-                            )
-                        );
+                        double ismooth = 255 * static_cast< float >( iter_t[ i ] ) / imax;
+                        if ( ismooth < 128 ) {
+                            m_backgound.SetPixel(
+                                x + i, y,
+                                sf::Color(
+                                    fcol.r * ismooth,
+                                    fcol.g * ismooth,
+                                    fcol.b * ismooth
+                                )
+                            );
+                        } else {
+                            m_backgound.SetPixel(
+                                x + i, y,
+                                sf::Color(
+                                    fcol.r * 255 - ismooth,
+                                    fcol.g * 255 - ismooth,
+                                    fcol.b * 255 - ismooth
+                                )
+                            );
+                        }
                     }
                 }
             }
@@ -186,10 +194,7 @@ public:
                 c_r = c_r / zoom_x + x1;
 
                 Vec8f z_r( 0 );
-                float z_r_t[ 8 ];
-
                 Vec8f z_i( 0 );
-                float z_i_t[ 8 ];
 
                 Vec8i    iter( 0 );
                 uint32_t iter_t[ 8 ];
@@ -205,17 +210,17 @@ public:
                       go_on_t[ 6 ] || go_on_t[ 7 ] );
                     ++i
                 ) {
-                    Vec8f const tmp( z_r );
-                    z_r = std::sqr( z_r ) - std::sqr( z_i ) + c_r;
-                    z_i = 2 * z_i * tmp + c_i;
-                    Vec8i const go_on( std::norm( z_r, z_i ) < 4 );
+                    Vec8i go_on = ( std::norm( z_r, z_i ) < 4 );
                     iter += -go_on;
                     go_on.store_a( go_on_t );
+                    Vec8f const p_z_r( z_r );
+                    z_r = std::sqr( z_r ) - std::sqr( z_i ) + c_r;
+                    z_i = z_i * p_z_r;  z_i += z_i + c_i;
                 }
 
                 iter.store_a( iter_t );
-                z_i.store_a( z_i_t );
-                z_r.store_a( z_r_t );
+                float z_i_t[ 8 ]; z_i.store_a( z_i_t );
+                float z_r_t[ 8 ]; z_r.store_a( z_r_t );
                 for ( uint32_t i = 0; i < 8; ++i ) {
                     if ( iter_t[ i ] == imax ) {
                         m_backgound.SetPixel(
@@ -223,16 +228,26 @@ public:
                             sf::Color( 0, 0, 0 )
                         );
                     } else {
-                        float ismooth = 255 *
-                            static_cast< float >( iter_t[ i ] ) / imax;
-                        m_backgound.SetPixel(
-                            x + i, y,
-                            sf::Color(
-                                fcol.r * ismooth,
-                                fcol.g * ismooth,
-                                fcol.b * ismooth
-                            )
-                        );
+                        float ismooth = 255 * static_cast< float >( iter_t[ i ] ) / imax;
+                        if ( ismooth < 128 ) {
+                            m_backgound.SetPixel(
+                                x + i, y,
+                                sf::Color(
+                                    fcol.r * ismooth,
+                                    fcol.g * ismooth,
+                                    fcol.b * ismooth
+                                )
+                            );
+                        } else {
+                            m_backgound.SetPixel(
+                                x + i, y,
+                                sf::Color(
+                                    fcol.r * 255 - ismooth,
+                                    fcol.g * 255 - ismooth,
+                                    fcol.b * 255 - ismooth
+                                )
+                            );
+                        }
                     }
                 }
             }
@@ -254,8 +269,9 @@ public:
                         sf::Color( 0, 0, 0 )
                     );
                 } else {
-                    float const ismooth = 255 *
-                        static_cast< float >( i ) / imax;
+                    float const ismooth = 255 * ( i + 1 -
+                        std::log2( std::log( std::norm( z_r, z_i) ) / 2 )
+                    ) / imax;
                     m_backgound.SetPixel(
                         x, y,
                         sf::Color(
@@ -318,16 +334,26 @@ public:
                         sf::Color( 0, 0, 0 )
                     );
                 } else {
-                    double const ismooth = 255 *
-                        static_cast< double >( i ) / imax;
-                    m_backgound.SetPixel(
-                        x, y,
-                        sf::Color(
-                            fcol.r * ismooth,
-                            fcol.g * ismooth,
-                            fcol.b * ismooth
-                        )
-                    );
+                    double ismooth = 255 * static_cast< float >( i ) / imax;
+                    if ( ismooth < 128 ) {
+                        m_backgound.SetPixel(
+                            x, y,
+                            sf::Color(
+                                fcol.r * ismooth,
+                                fcol.g * ismooth,
+                                fcol.b * ismooth
+                            )
+                        );
+                    } else {
+                        m_backgound.SetPixel(
+                            x, y,
+                            sf::Color(
+                                fcol.r * 255 - ismooth,
+                                fcol.g * 255 - ismooth,
+                                fcol.b * 255 - ismooth
+                            )
+                        );
+                    }
                 }
             }
         }
@@ -382,16 +408,26 @@ public:
                         sf::Color( 0, 0, 0 )
                     );
                 } else {
-                    float const ismooth = 255 *
-                        static_cast< float >( i ) / imax;
-                    m_backgound.SetPixel(
-                        x, y,
-                        sf::Color(
-                            fcol.r * ismooth,
-                            fcol.g * ismooth,
-                            fcol.b * ismooth
-                        )
-                    );
+                    float ismooth = 255 * static_cast< float >( i ) / imax;
+                    if ( ismooth < 128 ) {
+                        m_backgound.SetPixel(
+                            x, y,
+                            sf::Color(
+                                fcol.r * ismooth,
+                                fcol.g * ismooth,
+                                fcol.b * ismooth
+                            )
+                        );
+                    } else {
+                        m_backgound.SetPixel(
+                            x, y,
+                            sf::Color(
+                                fcol.r * 255 - ismooth,
+                                fcol.g * 255 - ismooth,
+                                fcol.b * 255 - ismooth
+                            )
+                        );
+                    }
                 }
             }
         }

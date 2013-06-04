@@ -56,15 +56,15 @@ Vector-1.0/Vector/CMakeFiles/Vector.dir/src/instrset_detect.cpp.o: Vector-1.0/Ve
 Vector-1.0/Vector/CMakeFiles/Vector.dir/src/instrset_detect.cpp.o: ../Vector-1.0/Vector/src/instrset_detect.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/romain/Dropbox/Perso/Mandelbrot_test/build/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object Vector-1.0/Vector/CMakeFiles/Vector.dir/src/instrset_detect.cpp.o"
-	cd /home/romain/Dropbox/Perso/Mandelbrot_test/build/Vector-1.0/Vector && /opt/intel/composer_xe_2013.2.146/bin/intel64/icpc   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Vector.dir/src/instrset_detect.cpp.o -c /home/romain/Dropbox/Perso/Mandelbrot_test/Vector-1.0/Vector/src/instrset_detect.cpp
+	cd /home/romain/Dropbox/Perso/Mandelbrot_test/build/Vector-1.0/Vector && /usr/bin/g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Vector.dir/src/instrset_detect.cpp.o -c /home/romain/Dropbox/Perso/Mandelbrot_test/Vector-1.0/Vector/src/instrset_detect.cpp
 
 Vector-1.0/Vector/CMakeFiles/Vector.dir/src/instrset_detect.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Vector.dir/src/instrset_detect.cpp.i"
-	cd /home/romain/Dropbox/Perso/Mandelbrot_test/build/Vector-1.0/Vector && /opt/intel/composer_xe_2013.2.146/bin/intel64/icpc  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/romain/Dropbox/Perso/Mandelbrot_test/Vector-1.0/Vector/src/instrset_detect.cpp > CMakeFiles/Vector.dir/src/instrset_detect.cpp.i
+	cd /home/romain/Dropbox/Perso/Mandelbrot_test/build/Vector-1.0/Vector && /usr/bin/g++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/romain/Dropbox/Perso/Mandelbrot_test/Vector-1.0/Vector/src/instrset_detect.cpp > CMakeFiles/Vector.dir/src/instrset_detect.cpp.i
 
 Vector-1.0/Vector/CMakeFiles/Vector.dir/src/instrset_detect.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Vector.dir/src/instrset_detect.cpp.s"
-	cd /home/romain/Dropbox/Perso/Mandelbrot_test/build/Vector-1.0/Vector && /opt/intel/composer_xe_2013.2.146/bin/intel64/icpc  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/romain/Dropbox/Perso/Mandelbrot_test/Vector-1.0/Vector/src/instrset_detect.cpp -o CMakeFiles/Vector.dir/src/instrset_detect.cpp.s
+	cd /home/romain/Dropbox/Perso/Mandelbrot_test/build/Vector-1.0/Vector && /usr/bin/g++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/romain/Dropbox/Perso/Mandelbrot_test/Vector-1.0/Vector/src/instrset_detect.cpp -o CMakeFiles/Vector.dir/src/instrset_detect.cpp.s
 
 Vector-1.0/Vector/CMakeFiles/Vector.dir/src/instrset_detect.cpp.o.requires:
 .PHONY : Vector-1.0/Vector/CMakeFiles/Vector.dir/src/instrset_detect.cpp.o.requires

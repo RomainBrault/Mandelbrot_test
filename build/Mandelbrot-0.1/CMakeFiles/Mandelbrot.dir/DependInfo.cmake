@@ -6,7 +6,7 @@ SET(CMAKE_DEPENDS_LANGUAGES
 SET(CMAKE_DEPENDS_CHECK_CXX
   "/home/romain/Dropbox/Perso/Mandelbrot_test/Mandelbrot-0.1/src/Mandelbrot.cpp" "/home/romain/Dropbox/Perso/Mandelbrot_test/build/Mandelbrot-0.1/CMakeFiles/Mandelbrot.dir/src/Mandelbrot.cpp.o"
   )
-SET(CMAKE_CXX_COMPILER_ID "Intel")
+SET(CMAKE_CXX_COMPILER_ID "GNU")
 
 # Preprocessor definitions for this target.
 SET(CMAKE_TARGET_DEFINITIONS

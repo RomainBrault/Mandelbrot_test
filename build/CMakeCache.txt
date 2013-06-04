@@ -45,11 +45,11 @@ CMAKE_CC_FLAGS_RELWITHDEBINFO:STRING=-O2 -g
 CMAKE_COLOR_MAKEFILE:BOOL=ON
 
 //CXX compiler.
-CMAKE_CXX_COMPILER:FILEPATH=/opt/intel/composer_xe_2013.2.146/bin/intel64/icpc
+CMAKE_CXX_COMPILER:FILEPATH=/usr/bin/g++
 
 //Choose the type of build, options are: None Debug Release RelWithDebInfo
 // MinSizeRel.
-CMAKE_CXX_FLAGS:STRING= -openmp -g -fpic -Wcheck -Wall -fno-common -std=c++11 -fno-gnu-keywords
+CMAKE_CXX_FLAGS:STRING= -fopenmp -g -fpic -Wall -fno-common -Wshadow -Wextra -pedantic -std=c++11 -save-temps
 
 //Choose the type of build, options are: None Debug Release RelWithDebInfo
 // MinSizeRel.
@@ -61,7 +61,7 @@ CMAKE_CXX_FLAGS_MINSIZEREL:STRING=-Os -DNDEBUG
 
 //Choose the type of build, options are: None Debug Release RelWithDebInfo
 // MinSizeRel.
-CMAKE_CXX_FLAGS_RELEASE:STRING=-Ofast -DNDEBUG
+CMAKE_CXX_FLAGS_RELEASE:STRING=-Ofast -flto -DNDEBUG
 
 //Choose the type of build, options are: None Debug Release RelWithDebInfo
 // MinSizeRel.
@@ -236,7 +236,7 @@ Mandelbrot_BINARY_DIR:STATIC=/home/romain/Dropbox/Perso/Mandelbrot_test/build
 Mandelbrot_SOURCE_DIR:STATIC=/home/romain/Dropbox/Perso/Mandelbrot_test
 
 //C++ compiler flags for OpenMP parallization
-OpenMP_CXX_FLAGS:STRING=-openmp
+OpenMP_CXX_FLAGS:STRING=-fopenmp
 
 //C compiler flags for OpenMP parallization
 OpenMP_C_FLAGS:STRING=-fopenmp
@@ -312,12 +312,6 @@ Vector_LIB_DEPENDS:STATIC=
 
 //Value Computed by CMake
 Vector_SOURCE_DIR:STATIC=/home/romain/Dropbox/Perso/Mandelbrot_test/Vector-1.0
-
-//Path to a program.
-XIAR:FILEPATH=/opt/intel/composer_xe_2013.2.146/bin/intel64/xiar
-
-//Path to a program.
-XILD:FILEPATH=/opt/intel/composer_xe_2013.2.146/bin/intel64/xild
 
 
 ########################
@@ -472,7 +466,7 @@ CPACK_SOURCE_ZIP-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CXX11_FEATURE_LIST
 CXX11_FEATURE_LIST-ADVANCED:INTERNAL=1
 //Details about finding OpenMP
-FIND_PACKAGE_MESSAGE_DETAILS_OpenMP:INTERNAL=[-fopenmp][-openmp][v()]
+FIND_PACKAGE_MESSAGE_DETAILS_OpenMP:INTERNAL=[-fopenmp][-fopenmp][v()]
 //C++11 support for "auto" (N2546)
 HAS_CXX11_AUTO:INTERNAL=TRUE
 //C++11 support for "chrono"
@@ -553,10 +547,6 @@ TBB_LIBRARY_DIRS-ADVANCED:INTERNAL=1
 TBB_MALLOC_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: TBB_MALLOC_LIBRARY_DEBUG
 TBB_MALLOC_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: XIAR
-XIAR-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: XILD
-XILD-ADVANCED:INTERNAL=1
 //Result of TRY_COMPILE
 _COMPILE_RESULT_VAR:INTERNAL=TRUE
 //Result of TRY_RUN
