@@ -623,7 +623,7 @@ static finline int32_t horizontal_add_x (Vec16c const & a) {
     __m128i sum2  = _mm_hadd_epi16(sum1,sum1);             // horizontally add 8 elements in 3 steps
     __m128i sum3  = _mm_hadd_epi16(sum2,sum2);
     __m128i sum4  = _mm_hadd_epi16(sum3,sum3);
-    int16_t sum5  = _mm_cvtsi128_si32(sum4);               // 16 bit sum
+    int16_t sum5  = static_cast< int16_t >( _mm_cvtsi128_si32(sum4) );               // 16 bit sum
     return  sum5;                                          // sign extend to 32 bits
 #else                 // SSE2
     __m128i aeven = _mm_slli_epi16(a,8);                   // even numbered elements of a. get sign bit in position
@@ -1516,7 +1516,7 @@ static finline uint32_t horizontal_add (Vec8us const & a) {
     __m128i sum1  = _mm_hadd_epi16(a,a);                   // horizontally add 8 elements in 3 steps
     __m128i sum2  = _mm_hadd_epi16(sum1,sum1);
     __m128i sum3  = _mm_hadd_epi16(sum2,sum2);
-    uint16_t sum4 = _mm_cvtsi128_si32(sum3);               // 16 bit sum
+    uint16_t sum4 = static_cast< uint16_t >( _mm_cvtsi128_si32(sum3) );               // 16 bit sum
     return  sum4;                                          // zero extend to 32 bits
 #else                 // SSE2
     __m128i sum1  = _mm_shuffle_epi32(a,0x0E);             // 4 high elements

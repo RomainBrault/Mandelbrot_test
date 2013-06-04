@@ -557,7 +557,7 @@ public:
         ymm = _mm256_load_ps(p);
         return *this;
     }
-    finline vec8f & load_s(float const *p) {
+    finline Vec8f & load_s(float const *p) {
         __m128i temp1 = _mm_stream_load_si128((__m128i*)p  );
         __m128i temp2 = _mm_stream_load_si128((__m128i*)p+4);
         *reinterpret_cast<__m128*>( &ymm   ) = *(reinterpret_cast< __m128* >(&temp1));

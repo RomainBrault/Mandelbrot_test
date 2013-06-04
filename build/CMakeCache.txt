@@ -49,7 +49,7 @@ CMAKE_CXX_COMPILER:FILEPATH=/opt/intel/composer_xe_2013.2.146/bin/intel64/icpc
 
 //Choose the type of build, options are: None Debug Release RelWithDebInfo
 // MinSizeRel.
-CMAKE_CXX_FLAGS:STRING= -openmp -g -fpic -Wcheck -Werror -Wall -fno-common -std=c++11 -fno-gnu-keywords
+CMAKE_CXX_FLAGS:STRING= -openmp -g -fpic -Wcheck -Wall -fno-common -std=c++11 -fno-gnu-keywords
 
 //Choose the type of build, options are: None Debug Release RelWithDebInfo
 // MinSizeRel.
