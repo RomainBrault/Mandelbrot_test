@@ -86006,18 +86006,18 @@ public:
                             m_backgound.SetPixel(
                                 x + i, y,
                                 sf::Color(
-                                    fcol.r * ismooth,
-                                    fcol.g * ismooth,
-                                    fcol.b * ismooth
+                                    fcol.r * ismooth * 2,
+                                    fcol.g * ismooth * 2,
+                                    fcol.b * ismooth * 2
                                 )
                             );
                         } else {
                             m_backgound.SetPixel(
                                 x + i, y,
                                 sf::Color(
-                                    fcol.r * 255 - ismooth,
-                                    fcol.g * 255 - ismooth,
-                                    fcol.b * 255 - ismooth
+                                    255 - ( 1 - fcol.r ) * ( 128 - ismooth ) * 2,
+                                    255 - ( 1 - fcol.g ) * ( 128 - ismooth ) * 2,
+                                    255 - ( 1 - fcol.b ) * ( 128 - ismooth ) * 2
                                 )
                             );
                         }
@@ -86044,14 +86044,25 @@ public:
                 } else {
                     double ismooth = 255 *
                         static_cast< double >( i ) / imax;
-                    m_backgound.SetPixel(
-                        x, y,
-                        sf::Color(
-                            fcol.r * ismooth,
-                            fcol.g * ismooth,
-                            fcol.b * ismooth
-                        )
-                    );
+                    if ( ismooth < 128 ) {
+                        m_backgound.SetPixel(
+                            x + i, y,
+                            sf::Color(
+                                fcol.r * ismooth * 2,
+                                fcol.g * ismooth * 2,
+                                fcol.b * ismooth * 2
+                            )
+                        );
+                    } else {
+                        m_backgound.SetPixel(
+                            x + i, y,
+                            sf::Color(
+                                255 - ( 1 - fcol.r ) * ( 128 - ismooth ) * 2,
+                                255 - ( 1 - fcol.g ) * ( 128 - ismooth ) * 2,
+                                255 - ( 1 - fcol.b ) * ( 128 - ismooth ) * 2
+                            )
+                        );
+                    }
                 }
             }
         }
@@ -86139,18 +86150,18 @@ public:
                             m_backgound.SetPixel(
                                 x + i, y,
                                 sf::Color(
-                                    fcol.r * ismooth,
-                                    fcol.g * ismooth,
-                                    fcol.b * ismooth
+                                    fcol.r * ismooth * 2,
+                                    fcol.g * ismooth * 2,
+                                    fcol.b * ismooth * 2
                                 )
                             );
                         } else {
                             m_backgound.SetPixel(
                                 x + i, y,
                                 sf::Color(
-                                    fcol.r * 255 - ismooth,
-                                    fcol.g * 255 - ismooth,
-                                    fcol.b * 255 - ismooth
+                                    255 - ( 1 - fcol.r ) * ( 128 - ismooth ) * 2,
+                                    255 - ( 1 - fcol.g ) * ( 128 - ismooth ) * 2,
+                                    255 - ( 1 - fcol.b ) * ( 128 - ismooth ) * 2
                                 )
                             );
                         }
@@ -86175,17 +86186,26 @@ public:
                         sf::Color( 0, 0, 0 )
                     );
                 } else {
-                    float const ismooth = 255 * ( i + 1 -
-                        std::log2( std::log( std::norm( z_r, z_i) ) / 2 )
-                    ) / imax;
-                    m_backgound.SetPixel(
-                        x, y,
-                        sf::Color(
-                            fcol.r * ismooth,
-                            fcol.g * ismooth,
-                            fcol.b * ismooth
-                        )
-                    );
+                    float ismooth = 255 * static_cast< float >( i ) / imax;
+                    if ( ismooth < 128 ) {
+                        m_backgound.SetPixel(
+                            x + i, y,
+                            sf::Color(
+                                fcol.r * ismooth * 2,
+                                fcol.g * ismooth * 2,
+                                fcol.b * ismooth * 2
+                            )
+                        );
+                    } else {
+                        m_backgound.SetPixel(
+                            x + i, y,
+                            sf::Color(
+                                255 - ( 1 - fcol.r ) * ( 128 - ismooth ) * 2,
+                                255 - ( 1 - fcol.g ) * ( 128 - ismooth ) * 2,
+                                255 - ( 1 - fcol.b ) * ( 128 - ismooth ) * 2
+                            )
+                        );
+                    }
                 }
             }
         }
@@ -86245,18 +86265,18 @@ public:
                         m_backgound.SetPixel(
                             x, y,
                             sf::Color(
-                                fcol.r * ismooth,
-                                fcol.g * ismooth,
-                                fcol.b * ismooth
+                                fcol.r * ismooth * 2,
+                                fcol.g * ismooth * 2,
+                                fcol.b * ismooth * 2
                             )
                         );
                     } else {
                         m_backgound.SetPixel(
                             x, y,
                             sf::Color(
-                                fcol.r * 255 - ismooth,
-                                fcol.g * 255 - ismooth,
-                                fcol.b * 255 - ismooth
+                                255 - ( 1 - fcol.r ) * ( 128 - ismooth ) * 2,
+                                255 - ( 1 - fcol.g ) * ( 128 - ismooth ) * 2,
+                                255 - ( 1 - fcol.b ) * ( 128 - ismooth ) * 2
                             )
                         );
                     }
@@ -86319,18 +86339,18 @@ public:
                         m_backgound.SetPixel(
                             x, y,
                             sf::Color(
-                                fcol.r * ismooth,
-                                fcol.g * ismooth,
-                                fcol.b * ismooth
+                                fcol.r * ismooth * 2,
+                                fcol.g * ismooth * 2,
+                                fcol.b * ismooth * 2
                             )
                         );
                     } else {
                         m_backgound.SetPixel(
                             x, y,
                             sf::Color(
-                                fcol.r * 255 - ismooth,
-                                fcol.g * 255 - ismooth,
-                                fcol.b * 255 - ismooth
+                                255 - ( 1 - fcol.r ) * ( 128 - ismooth ) * 2,
+                                255 - ( 1 - fcol.g ) * ( 128 - ismooth ) * 2,
+                                255 - ( 1 - fcol.b ) * ( 128 - ismooth ) * 2
                             )
                         );
                     }
